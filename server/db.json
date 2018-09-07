@@ -1,0 +1,77 @@
+{
+  "exams": [{
+      "id": 384, 
+      "examName": "移动端UI测试", 
+      "duration": 90, 
+      "illustrate": "移动端UI测试", 
+      "examineeId": 37, 
+      "beginTime": 1536199618000, 
+      "submitTime": 1536205018000, 
+      "subjectsMap": {
+          "single": [
+              {
+                  "subjectId": 1486, 
+                  "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]", 
+                  "title": "dddd", 
+                  "score": 5, 
+                  "subjectType": "single"
+              }, 
+              {
+                  "subjectId": 1483, 
+                  "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]", 
+                  "title": "AAAAA", 
+                  "score": 5, 
+                  "subjectType": "single"
+              }, 
+              {
+                  "subjectId": 1484, 
+                  "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]", 
+                  "title": "bbbbb", 
+                  "score": 5, 
+                  "subjectType": "single"
+              }, 
+              {
+                  "subjectId": 1485, 
+                  "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]", 
+                  "title": "cccc", 
+                  "score": 5, 
+                  "subjectType": "single"
+              }
+          ], 
+          "essay": [
+              {
+                  "subjectId": 1488, 
+                  "title": "JDT", 
+                  "score": 5, 
+                  "subjectType": "essay"
+              }
+          ], 
+          "multiple": [
+              {
+                  "subjectId": 1487, 
+                  "content": "[{\"option\":\"AAAA\",\"answer\":null},{\"option\":\"BBBB\",\"answer\":true},{\"option\":\"CCCC\",\"answer\":true},{\"option\":\"DDDD\",\"answer\":null}]", 
+                  "title": "多选BBBBBB", 
+                  "score": 5, 
+                  "subjectType": "multiple"
+              }
+          ], 
+          "judge": [
+              {
+                  "subjectId": 1489, 
+                  "content": "[{\"option\":\"正确\"},{\"option\":\"错误\"}]", 
+                  "title": "PD", 
+                  "score": 5, 
+                  "subjectType": "judge"
+              }
+          ], 
+          "fill": [
+              {
+                  "subjectId": 1490, 
+                  "title": "TKT", 
+                  "score": 5, 
+                  "subjectType": "fill"
+              }
+          ]
+      }
+  }]
+}
