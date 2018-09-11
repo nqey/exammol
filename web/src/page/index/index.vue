@@ -7,9 +7,9 @@
     </header>
     <nav class="exam-nav" v-show="open">
       <ul>
-        <li v-for="i in page" :key="'ject' + i">
+        <li v-for="(exam, i) in exams" :key="'ject' + i">
           <input type="radio" name="nav" :value="i" :id="'nav' + i">
-          <label :for="'nav' + i" @touchstart="select(i)">{{i}}</label>
+          <label :for="'nav' + i" @touchstart="select(i)" :class="{ success: exam.answer.length > 0  }">{{i+1}}</label>
         </li>
       </ul>
     </nav>
@@ -77,7 +77,7 @@ export default {
     countdown () {
       if (this.totalsecond <= 0) {
         clearInterval(this.interval)
-        this.submit()
+        // this.submit()
       }
       // 剩余小时
       const remainhour = prefixInteger(Math.floor(this.totalsecond / 3600))
@@ -119,6 +119,7 @@ export default {
         .concat(getArr(jects.fill))
         .concat(getArr(jects.essay))
         .map(o => {
+          o.answer = ''
           if (!o.content) return o
           o.content = JSON.parse(o.content)
           if (o.subjectType === 'multiple') o.answer = []
@@ -130,22 +131,31 @@ export default {
     },
     preIndex () {
       this.index -= 1
-      if (this.index < 0) this.index = 0
+      if (this.index < 0) this.index = this.page - 1
     },
     nextIndex () {
       this.index += 1
-      if (this.index >= this.page) this.index = this.page - 1
+      if (this.index >= this.page) this.index = 0
     },
     submit () {
       // TODO
-      window.console.log('提交试卷成功！！！', this.exams)
+      const noAnswers = this.exams.map((o, i) => {
+        if (o.answer.length === 0) return i + 1
+      }).filter(o => o !== undefined)
+      const message = noAnswers.length ? `${noAnswers.join('题、')}题 未完成` : '答题完成'
+      this.$popup.show({
+        title: '答案',
+        message,
+        submit: () => {}
+      })
+      window.console.log('提交试卷成功！！！', this.exams, noAnswers)
     },
     toggle () {
       this.open = !this.open
     },
     select (i) {
-      this.index = i - 1
-      window.setTimeout(this.toggle, 300)
+      this.index = i
+      setTimeout(this.toggle, 300)
     }
   },
   mounted () {

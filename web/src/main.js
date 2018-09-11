@@ -5,8 +5,10 @@ import App from './App'
 import router from './router'
 import store from './store/store'
 import './assets/font_icons/fonts.css'
+import popup from './components/popup/index.js'
 
 Vue.config.productionTip = false
+Vue.use(popup)
 
 /* eslint-disable no-new */
 new Vue({
