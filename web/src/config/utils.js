@@ -320,16 +320,16 @@ export const touch = (fns = {
     endY = e.changedTouches[0].pageY
     X = endX - startX
     Y = endY - startY
-    if (Math.abs(X) > Math.abs(Y) && X > 0) {
+    if (Math.abs(X) > Math.abs(Y) && X > 0 && Math.abs(X) > 70) {
       // 左到右
       runFn('left2right')
-    } else if (Math.abs(X) > Math.abs(Y) && X < 0) {
+    } else if (Math.abs(X) > Math.abs(Y) && X < 0 && Math.abs(X) > 70) {
       // 右到左
       runFn('right2left')
-    } else if (Math.abs(Y) > Math.abs(X) && Y > 0) {
+    } else if (Math.abs(Y) > Math.abs(X) && Y > 0 && Math.abs(Y) > 70) {
       // 上到下
       runFn('top2bottom')
-    } else if (Math.abs(Y) > Math.abs(X) && Y < 0) {
+    } else if (Math.abs(Y) > Math.abs(X) && Y < 0 && Math.abs(Y) > 70) {
       // 下到上
       runFn('bottom2top')
     }

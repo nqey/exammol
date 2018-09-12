@@ -4,7 +4,6 @@ Popup.install = function (Vue, options) { // vue的install方法，用于定义v
   // 如果popup还在，则不再执行
   if (document.getElementsByClassName('popup-dialog').length) return
   let PopupTpl = Vue.extend(Alert) // 创建vue构造器
-  window.console.log(Alert)
   // el：提供一个在页面上已存在的DOM元素作为Vue实例的挂载目标。可以是css选择器，也可以是HTMLElement实例。
   // 在实例挂载之后，可以通过$vm.$el访问。
   // 如果这个选项在实例化时有用到，实例将立即进入编译过程。否则，需要显示调用vm.$mount()手动开启编译(如下)
@@ -14,10 +13,8 @@ Popup.install = function (Vue, options) { // vue的install方法，用于定义v
   })
   // let $vm = new popupTpl() // 实例化vue实例
   // 此处使用$mount来手动开启编译。用$el来访问元素，并插入到body中
-  window.console.log($vm)
   let tpl = $vm.$mount('div').$el
   document.body.appendChild(tpl)
-  window.console.log(tpl)
   Vue.prototype.$popup = { // 在Vue的原型上添加实例方法，以全局调用
     show (options) { // 控制popup显示的方法
       if (typeof options === 'string') { // 对参数进行判断

@@ -1,7 +1,7 @@
 <template>
   <div class="exam" ref="exam">
     <header class="exam-head">
-        <span class="icon-list2" @touchstart="toggle"></span>
+        <span class="icon-list2" @touchstart="toggle($event)"></span>
         <span class="time">{{countdown}}</span>
         <span class="num">{{index + 1}}/{{page}}</span>
     </header>
@@ -9,11 +9,11 @@
       <ul>
         <li v-for="(exam, i) in exams" :key="'ject' + i">
           <input type="radio" name="nav" :value="i" :id="'nav' + i">
-          <label :for="'nav' + i" @touchstart="select(i)" :class="{ success: exam.answer.length > 0  }">{{i+1}}</label>
+          <label :for="'nav' + i" @touchstart="select($event, i)" :class="{ success: `${exam.answer}`.length > 0  }">{{i+1}}</label>
         </li>
       </ul>
     </nav>
-    <section class="exam-body" v-if="exam" v-show="!open">
+    <section class="exam-body animated" :class="{ fadeInLeft: isBounceInLeft, fadeInRight: isBounceInRight}" v-if="exam" v-show="!open">
       <h4>({{title}})</h4>
       <p>{{index + 1}}、{{exam.title}}</p>
       <ul class="exam-list">
@@ -27,15 +27,15 @@
     </section>
     <footer class="exam-foot">
       <qc-button type="submit" @touchstart.native="submit" v-show="isShow">提交答卷</qc-button>
-      <qc-button type="next" @touchstart.native="preIndex">上一题</qc-button>
+      <qc-button type="next" @touchstart.native="preIndex" disabled>上一题</qc-button>
       <span>|</span>
-      <qc-button type="next" @touchstart.native="nextIndex">下一题</qc-button>
+      <qc-button type="next" @touchstart.native="nextIndex" disabled>下一题</qc-button>
     </footer>
   </div>
 </template>
 
 <script>
-import { getExamList } from '@/config/api'
+import { getExamList, getAnswer } from '@/config/api'
 import { prefixInteger, getArrLen, getArr, touch } from '@/config/utils'
 
 export default {
@@ -48,6 +48,8 @@ export default {
       totalsecond: 0,
       interval: null,
       open: false,
+      isBounceInLeft: false,
+      isBounceInRight: false,
       mapping: {
         'single': '单选题',
         'multiple': '多选题',
@@ -132,10 +134,14 @@ export default {
     preIndex () {
       this.index -= 1
       if (this.index < 0) this.index = this.page - 1
+      this.isBounceInLeft = true
+      setTimeout(() => { this.isBounceInLeft = false }, 1000)
     },
     nextIndex () {
       this.index += 1
       if (this.index >= this.page) this.index = 0
+      this.isBounceInRight = true
+      setTimeout(() => { this.isBounceInRight = false }, 1000)
     },
     submit () {
       // TODO
@@ -143,19 +149,42 @@ export default {
         if (o.answer.length === 0) return i + 1
       }).filter(o => o !== undefined)
       const message = noAnswers.length ? `${noAnswers.join('题、')}题 未完成` : '答题完成'
+      let errQS = []
+      let scroe = 0
       this.$popup.show({
         title: '答案',
         message,
-        submit: () => {}
+        submit: async () => {
+          const data = await getAnswer(this.$route.params.id)
+          const answerMap = data.examineeAnswerMap;
+          [].concat(getArr(answerMap.single))
+            .concat(getArr(answerMap.multiple))
+            .concat(getArr(answerMap.judge))
+            .concat(getArr(answerMap.fill))
+            .concat(getArr(answerMap.essay))
+            .forEach((o) => {
+              if (o.examineeAnswer !== o.correctAnswer) {
+                errQS.push(o.subjectSort)
+              } else {
+                scroe = scroe + o.score
+              }
+            })
+          this.$popup.show({
+            title: '考试提交成功',
+            message: `得分<span style="color: #01c853">${scroe}</span>分<hr style="margin:10px 0px"/>错误题号<span style='color: red'>${errQS.sort().join(',')}</span>`,
+            button: false
+          })
+          window.console.log('提交试卷成功！！！', this.exams, data)
+        }
       })
-      window.console.log('提交试卷成功！！！', this.exams, noAnswers)
     },
-    toggle () {
+    toggle (e) {
       this.open = !this.open
+      e.preventDefault()
     },
-    select (i) {
+    select (e, i) {
       this.index = i
-      setTimeout(this.toggle, 300)
+      this.toggle(e)
     }
   },
   mounted () {

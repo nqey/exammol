@@ -73,5 +73,81 @@
               }
           ]
       }
+  }],
+  "answer": [{
+    "id": 384,
+    "examExamineeId": 384,
+    "examinationScore": 0,
+    "name": "lol",
+    "submitTime": 1536205303000,
+    "examineeAnswerMap": {
+        "single": [{
+            "subjectId": 1483,
+            "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]",
+            "title": "AAAAA",
+            "score": 5,
+            "subjectType": "single",
+            "subjectSort": 2,
+            "correctAnswer": "0"
+        }, {
+            "subjectId": 1484,
+            "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]",
+            "title": "bbbbb",
+            "score": 5,
+            "subjectType": "single",
+            "subjectSort": 3,
+            "correctAnswer": "1"
+        }, {
+            "subjectId": 1485,
+            "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]",
+            "title": "cccc",
+            "score": 5,
+            "subjectType": "single",
+            "subjectSort": 4,
+            "correctAnswer": "2"
+        }, {
+            "subjectId": 1486,
+            "content": "[{\"option\":\"AAAA\"},{\"option\":\"BBBBB\"},{\"option\":\"CCCCC\"},{\"option\":\"DDDDD\"}]",
+            "title": "dddd",
+            "score": 5,
+            "subjectType": "single",
+            "subjectSort": 1,
+            "correctAnswer": "3"
+        }],
+        "essay": [{
+            "subjectId": 1488,
+            "title": "JDT",
+            "score": 5,
+            "subjectType": "essay",
+            "subjectSort": 6
+        }],
+        "multiple": [{
+            "subjectId": 1487,
+            "content": "[{\"option\":\"AAAA\",\"answer\":null},{\"option\":\"BBBB\",\"answer\":true},{\"option\":\"CCCC\",\"answer\":true},{\"option\":\"DDDD\",\"answer\":null}]",
+            "title": "多选BBBBBB",
+            "score": 5,
+            "subjectType": "multiple",
+            "subjectSort": 5,
+            "correctAnswer": "1,2",
+            "examineeAnswer": ""
+        }],
+        "judge": [{
+            "subjectId": 1489,
+            "content": "[{\"option\":\"正确\"},{\"option\":\"错误\"}]",
+            "title": "PD",
+            "score": 5,
+            "subjectType": "judge",
+            "subjectSort": 8,
+            "correctAnswer": "0"
+        }],
+        "fill": [{
+            "subjectId": 1490,
+            "title": "TKT",
+            "score": 5,
+            "subjectType": "fill",
+            "subjectSort": 7,
+            "correctAnswer": "AAAA"
+        }]
+    }
   }]
 }

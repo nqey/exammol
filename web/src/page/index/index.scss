@@ -14,7 +14,8 @@
   box-sizing: border-box;
   background: #f1e9e9;
   min-height: 600px;
-
+  overflow-x:hidden;
+  z-index: -1;
   .exam-head{
     position: fixed;
     display: table;
@@ -26,6 +27,7 @@
     background: #333;
     color: #fff;
     font-size: 18px;
+    z-index: 9999;
     .time,
     span {
       display: table-cell;
@@ -39,7 +41,7 @@
   .exam-nav,
   .exam-body {
     padding: 15px;
-    margin-top: 40px;
+    margin-top: 60px;
     background: #fff;
   }
   .exam-body {

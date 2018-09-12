@@ -15,3 +15,16 @@ export const getExamList = async (id) => {
   })
   return res.data
 }
+
+/**
+ * @author 秦超
+ * @returns exam List
+ */
+export const getAnswer = async (id) => {
+  const res = await axios.get(`${apiSrv}/answer/${id}`, {
+    adapter: cache({
+      local: true
+    })
+  })
+  return res.data
+}

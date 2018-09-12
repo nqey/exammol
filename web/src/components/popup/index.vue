@@ -3,10 +3,12 @@
       <div class="lodding-mask"></div>
       <div id="popup-dialog" class="popup-dialog">
         <h3 id="popup-dialog-title">{{title}}</h3>
-        <p id="popup-dialog-msg" class="message">{{message}}</p>
-        <div class="ui-grid-a group">
+        <p id="popup-dialog-msg" class="message">
+         <span v-html="message"></span>
+        </p>
+        <div class="ui-grid-a group" v-show="button">
           <div class="ui-block-a" @touchstart="submit">提交答卷</div>
-          <div class="ui-block-b" @touchstart="close">继续做题</div>
+          <div class="ui-block-b" @touchstart="close($event)">继续做题</div>
         </div>
       </div>
   </div>
@@ -25,6 +27,10 @@ export default {
       type: String,
       default: null
     },
+    button: {
+      type: Boolean,
+      default: true
+    },
     submit: {
       type: Function,
       default: () => {}
@@ -36,11 +42,13 @@ export default {
     }
   },
   methods: {
-    open () {
+    open (e) {
       this.show = true
+      e.preventDefault()
     },
-    close () {
+    close (e) {
       this.show = false
+      e.preventDefault()
     }
   }
 }
