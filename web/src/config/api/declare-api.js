@@ -1,6 +1,20 @@
 import axios from '@/config/api/http'
 
-const apiSrv = process.env.NODE_ENV === 'development' ? '//dec.cpsdb61.com/' : '//dec.cpsdb.com/'
+// const apiSrv = process.env.NODE_ENV === 'development' ? '//dec.cpsdb61.com/' : '//dec.cpsdb.com/'
+const env = (() => {
+  if (/cpsdb61.com/.test(window.location.hostname)) {
+    return 'test'
+  } else if (/cpsdb.com/.test(window.location.hostname)) {
+    return 'online'
+  }
+  return 'local'
+})()
+
+const apiSrv = {
+  test: '//dec.cpsdb61.com/',
+  online: '//dec.cpsdb.com/',
+  local: location.hostname
+}[env]
 
 /**
  * @author 秦超

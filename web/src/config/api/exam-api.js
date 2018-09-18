@@ -1,7 +1,22 @@
 import cache from '@/config/cache'
 import axios from '@/config/api/http'
 
-const apiSrv = process.env.NODE_ENV === 'development' ? '//exam.cpsdb61.com/' : '//exam.cpsdb.com/'
+const env = (() => {
+  if (/cpsdb61.com/.test(window.location.hostname)) {
+    return 'test'
+  } else if (/cpsdb.com/.test(window.location.hostname)) {
+    return 'online'
+  }
+  return 'local'
+})()
+
+const apiSrv = {
+  test: '//exam.cpsdb61.com/',
+  online: '//exam.cpsdb.com/',
+  local: location.hostname
+}[env]
+
+// const apiSrv = process.env.NODE_ENV === 'development' ? '//exam.cpsdb61.com/' : '//exam.cpsdb.com/'
 
 /**
  * @author 秦超
@@ -9,9 +24,9 @@ const apiSrv = process.env.NODE_ENV === 'development' ? '//exam.cpsdb61.com/' : 
  */
 export const getExams = async (id) => {
   const res = await axios.get(`${apiSrv}exams/declareexamination/app/allsubjects`, {
-    // adapter: cache({
-    //   local: true
-    // })
+    adapter: cache({
+      local: true
+    })
   })
   return res.data.success ? res.data.data : false
 }
