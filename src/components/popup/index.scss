@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+.popup-dialog {
+    position: fixed;
+    width: 280px;
+    left: 50%;
+    margin-left: -140px;
+    top: 35%;
+    background: #fff;
+    z-index: 999999;
+    border: 0;
+    border-radius: 12px;
+    border-color: #ddd;
+    text-align: center;
+    box-shadow: 0 0 12px rgba(0,0,0,.6);
+    user-select: none;
+}
+
+.popup-dialog h3 {
+    display: block;
+    font-size: 1.17em;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+    margin-top: 15px;
+    padding: 0 10px;
+}
+
+.popup-dialog .message {
+    margin: 5px;
+    padding: 0 5px;
+    font-size: 14px;
+    color: #111;
+    word-wrap: break-word;
+}
+
+.popup-dialog .ui-grid-a {
+    line-height: 45px;
+    color: #228bfe;
+    font-size: 16px;
+    font-weight: 700;
+    border-top: #b5b5b5 solid 1px;
+}
+
+.popup-dialog .ui-block-a {
+    border-right: #b5b5b5 solid 1px;
+}
+
+.popup-dialog .ui-block-a, .popup-dialog .ui-block-b {
+    -webkit-tap-highlight-color::rgba(0,0,0,0.1);
+    width: 49.8%;
+    float: left;
+}
+
+.lodding-mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+    background: rgba(0,0,0,.6);
+    opacity: .6;
+}

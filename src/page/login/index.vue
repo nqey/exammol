@@ -1,14 +1,7 @@
 <template>
   <div class="exam" ref="exam">
-    <section class="text-center illustrate" v-show="isIllustrate">
-      <img src="../../assets/logo/logo.png" class="ks-logo">
-      <h1>中国商品诚信数据库考试系统</h1>
-      <h1>{{obj.examName}}</h1>
-      <p>{{obj.illustrate}}</p>
-      <qc-button @touchstart.native="closeIllustrate($event)">开始考试</qc-button>
-    </section>
     <header class="exam-head">
-        <span class="icon-list2" @touchstart.native="toggle($event)"></span>
+        <span class="icon-list2" @touchstart="toggle($event)"></span>
         <span class="time">{{countdown}}</span>
         <span class="num">{{index + 1}}/{{page}}</span>
     </header>
@@ -42,10 +35,8 @@
 </template>
 
 <script>
-// import { getExams } from '@/config/api/mock-api'
-import { getExams, postAnswer } from '@/config/api/exam-api'
-import { getUserInfo } from '@/config/api/declare-api'
-import { prefixInteger, getArrLen, getArr, touch, clone } from '@/config/utils'
+import { getExamList, getAnswer } from '@/config/api'
+import { prefixInteger, getArrLen, getArr, touch } from '@/config/utils'
 
 export default {
   name: 'index',
@@ -59,8 +50,6 @@ export default {
       open: false,
       isBounceInLeft: false,
       isBounceInRight: false,
-      userInfo: null,
-      isIllustrate: true,
       mapping: {
         'single': '单选题',
         'multiple': '多选题',
@@ -124,37 +113,23 @@ export default {
   },
   methods: {
     async init () {
-      getUserInfo().then((o) => {
-        this.userInfo = o
-      })
-      this.obj = await getExams(this.$route.params.id)
+      this.obj = await getExamList(this.$route.params.id)
       const jects = this.obj.subjectsMap
-      this.exams = [
-        ...getArr(jects.single),
-        ...getArr(jects.multiple),
-        ...getArr(jects.judge),
-        ...getArr(jects.fill),
-        ...getArr(jects.essay)
-      ].map(o => {
-        o.answer = ''
-        if (!o.content) return o
-        o.content = JSON.parse(o.content)
-        if (o.subjectType === 'multiple') o.answer = []
-        return o
-      })
-      // if (new Date().getTime() > this.obj.submitTime) {
-      //   this.$popup.show({
-      //     title: '提示',
-      //     message: '<p style="color:red;padding: 15px;">超过考试期限，考试已作废！！！</p>',
-      //     button: false
-      //   })
-      // }
+      this.exams = [].concat(getArr(jects.single))
+        .concat(getArr(jects.multiple))
+        .concat(getArr(jects.judge))
+        .concat(getArr(jects.fill))
+        .concat(getArr(jects.essay))
+        .map(o => {
+          o.answer = ''
+          if (!o.content) return o
+          o.content = JSON.parse(o.content)
+          if (o.subjectType === 'multiple') o.answer = []
+          return o
+        })
+      // if (new Date().getTime() > this.obj.submitTime) return
       this.totalsecond = Math.floor((this.obj.submitTime - this.obj.beginTime) / 1000)
       this.interval = setInterval(() => { this.totalsecond -= 1 }, 1000)
-    },
-    closeIllustrate (e) {
-      this.isIllustrate = false
-      e.preventDefault()
     },
     preIndex () {
       this.index -= 1
@@ -169,28 +144,37 @@ export default {
       setTimeout(() => { this.isBounceInRight = false }, 1000)
     },
     submit () {
+      // TODO
       const noAnswers = this.exams.map((o, i) => {
         if (o.answer.length === 0) return i + 1
       }).filter(o => o !== undefined)
       const message = noAnswers.length ? `${noAnswers.join('题、')}题 未完成` : '答题完成'
+      let errQS = []
+      let scroe = 0
       this.$popup.show({
         title: '答案',
         message,
         submit: async () => {
-          const answerList = clone(this.exams).map((o, i) => {
-            o.subjectSort = i + 1
-            if (o.subjectType === 'multiple') o.answer = getArr(o.answer).join(',')
-            return o
+          const data = await getAnswer(this.$route.params.id)
+          const answerMap = data.examineeAnswerMap;
+          [].concat(getArr(answerMap.single))
+            .concat(getArr(answerMap.multiple))
+            .concat(getArr(answerMap.judge))
+            .concat(getArr(answerMap.fill))
+            .concat(getArr(answerMap.essay))
+            .forEach((o) => {
+              if (o.examineeAnswer !== o.correctAnswer) {
+                errQS.push(o.subjectSort)
+              } else {
+                scroe = scroe + o.score
+              }
+            })
+          this.$popup.show({
+            title: '考试提交成功',
+            message: `得分<span style="color: #01c853">${scroe}</span>分<hr style="margin:10px 0px"/>错误题号<span style='color: red'>${errQS.sort().join(',')}</span>`,
+            button: false
           })
-          const param = {
-            name: this.userInfo.name,
-            certificate: this.userInfo.idNumber,
-            phone: this.userInfo.cellphone,
-            beginTime: this.obj.beginTime,
-            examinationId: this.obj.id,
-            answerList: JSON.stringify(answerList)
-          }
-          postAnswer(param, this)
+          window.console.log('提交试卷成功！！！', this.exams, data)
         }
       })
     },

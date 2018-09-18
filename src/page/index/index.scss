@@ -27,7 +27,7 @@
     background: #333;
     color: #fff;
     font-size: 18px;
-    z-index: 999;
+    z-index: 9999;
     .time,
     span {
       display: table-cell;
@@ -186,40 +186,10 @@
   }
   .exam-foot{
     position: fixed;
-    z-index: 99;
     bottom: 0;
     width: 100%;
     background: #fff;
     color: #999;
     text-align: center;
-  }
-}
-
-.illustrate {
-  position: fixed;
-  z-index: 9999;
-  background-color: #fff;
-  height: 100%;
-  width: 100%;
-  padding: 30px 10px;
-  h1 {
-    margin-top: 15px;
-    font-weight: 700;
-    font-size: 20px;
-  }
-  p {
-    overflow:scroll;
-    max-height:500px;
-    margin-top: 30px;
-    text-align: left;
-    text-indent: 30px;
-    background-color: #f1e9e9;
-    padding: 15px;
-  }
-  button {
-    margin-top: 30px;
-    background-color: #fff;
-    font-size: 30px;
-    color: #01c853;
   }
 }
