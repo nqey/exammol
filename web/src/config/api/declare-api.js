@@ -33,3 +33,20 @@ export const getUserInfo = async (id) => {
   const res = await axios.get(`${apiSrv}/declarerapp/declarer/get/examination`)
   return res.data.data
 }
+
+/**
+ * @author 秦超
+ * @returns login
+ */
+// export const doLogin = async () => {
+//   const res = await axios.get(`${apiSrv}publics/examinee/login`)
+//   // 判断http状态码
+//   if (res && [200, 304, 400].indexOf(res.status) > -1) {
+//     if (!res.data.success) {
+//       msg.error(res.data.message)
+//     }
+//   } else {
+//     msg.error('网络异常')
+//   }
+//   return res.data.data || Promise.reject(new Error('网络异常'))
+// }
