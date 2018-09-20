@@ -8,7 +8,7 @@
       <qc-button @touchstart.native="closeIllustrate($event)">开始考试</qc-button>
     </section>
     <header class="exam-head">
-        <span class="icon-list2" @touchstart.native="toggle($event)"></span>
+        <span class="icon-list2" @touchstart="toggle($event)"></span>
         <span class="time">{{countdown}}</span>
         <span class="num">{{index + 1}}/{{page}}</span>
     </header>
@@ -51,7 +51,7 @@ export default {
   name: 'index',
   data () {
     return {
-      obj: null,
+      obj: {},
       exams: [],
       index: 0,
       totalsecond: 0,
